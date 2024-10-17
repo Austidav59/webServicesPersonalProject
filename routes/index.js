@@ -7,8 +7,18 @@ const controller = require("../controllers/index");
 routes.get("/", controller.welcome);
 routes.get("/cars/:id", controller.getSingleCar);
 routes.get("/cars", controller.getAllCars);
-routes.post("/cars", controller.addCar);
+routes.post("/addcar", controller.addCar);
 routes.put("/cars/:id", controller.updateCar);
 routes.delete("/cars/:id", controller.deleteCar);
+
+//##########################################
+// ROUTES FOR EMPLOYEES
+//#########################################
+routes.get("/", controller.welcome);
+routes.get("/emploees/:id", controller.getSingleEmployee);
+routes.get("/employees", controller.getAllEmployee);
+routes.post("/addemployee", controller.addEmployee);
+routes.put("/employees/:id", controller.updateEmployee);
+routes.delete("/employees/:id", controller.deleteEmployee);
 
 module.exports = routes;
