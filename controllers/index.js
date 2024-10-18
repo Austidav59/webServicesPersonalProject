@@ -100,70 +100,70 @@ const deleteCar = async (req, res) => {
 //###########################
 const getAllEmployees = async (req, res) => {
     try {
-        const cars = await connectDB.getAllCars();
-        res.json(cars);
+        const employees = await connectDB.getAllEmployees();
+        res.json(employees);
     } catch (error) {
-        console.error("Error fetching all cars:", error);
-        res.status(500).json({ error: "Error fetching cars" });
+        console.error("Error fetching all employees:", error);
+        res.status(500).json({ error: "Error fetching employees" });
     }
 };
 
 const getSingleEmployee = async (req, res) => {
     try {
         const id = req.params.id;
-        console.log('Fetching car with id:', id); // Add this log
-        const car = await connectDB.getSingleCar(id);
-        if (!car) {
-            return res.status(404).json({ error: "Car not found" });
+        console.log('Fetching employee with id:', id);
+        const employee = await connectDB.getSingleEmployee(id);
+        if (!employee) {
+            return res.status(404).json({ error: "Employee not found" });
         }
-        res.json(car);
+        res.json(employee);
     } catch (error) {
-        console.error("Error in getSingleCar:", error);
-        res.status(500).json({ error: "Error fetching single car" });
+        console.error("Error in getSingleEmployee:", error);
+        res.status(500).json({ error: "Error fetching single employee" });
     }
 };
 
 const addEmployee = async (req, res) => {
     try {
-        const { make, model, year, color, price, isElectric, mileage } = req.body;
+        const { name, position, department, salary } = req.body;
 
-        if (!make || !model || !year || !color || !price || isElectric === undefined || !mileage) {
+        if (!name || !position || !department || !salary) {
             return res.status(400).json({ error: "All fields are required." });
         }
 
-        const newCar = await connectDB.addCar({ make, model, year, color, price, isElectric, mileage });
+        const newEmployee = await connectDB.addEmployee({ name, position, department, salary });
 
         res.status(201).json({
-            message: "Car added successfully",
-            carId: newCar._id
+            message: "Employee added successfully",
+            employeeId: newEmployee._id
         });
     } catch (error) {
-        console.error("Error adding car:", error);
-        res.status(500).json({ error: "Error adding car" });
+        console.error("Error adding employee:", error);
+        res.status(500).json({ error: "Error adding employee" });
     }
 };
 
 const updateEmployee = async (req, res) => {
     try {
         const id = req.params.id;
-        const { make, model, year, color, price, isElectric, mileage } = req.body;
+        const { name, position, department, salary } = req.body;
 
-        if (!make || !model || !year || !color || !price || isElectric === undefined || !mileage) {
+        if (!name || !position || !department || !salary) {
             return res.status(400).json({ error: "All fields are required." });
         }
 
-        const updatedCar = await connectDB.updateCar(id, {
-            make, model, year, color, price, isElectric, mileage
+        const updatedEmployee = await connectDB.updateEmployee(id, {
+            name, position, department, salary
         });
 
-        if (!updatedCar) {
-            return res.status(404).json({ error: "Car not found or update failed" });
+        if (!updatedEmployee) {
+            return res.status(404).json({ error: "Employee not found or update failed" });
         }
 
-        res.status(200).json({ message: "Car updated successfully", updatedCar });
+        res.status(200).json({ message: "Employee updated successfully", updatedEmployee });
     } catch (error) {
-        console.error("Error updating car:", error);
-        res.status(500).json({ error: "Error updating car" });
+        console.error("Error updating employee:", error);
+        res.status(500).json({ error: "Error updating employee" });
     }
 };
 
@@ -175,16 +175,16 @@ const deleteEmployee = async (req, res) => {
             return res.status(400).json({ error: "Invalid ID format" });
         }
 
-        const result = await connectDB.deleteCar(id);
+        const result = await connectDB.deleteEmployee(id);
 
         if (result.deletedCount === 0) {
-            return res.status(404).json({ error: "Car not found" });
+            return res.status(404).json({ error: "Employee not found" });
         }
 
         res.status(204).send();
     } catch (error) {
-        console.error("Error in deleteCar:", error);
-        res.status(500).json({ error: "Error deleting car", details: error.message });
+        console.error("Error in deleteEmployee:", error);
+        res.status(500).json({ error: "Error deleting employee", details: error.message });
     }
 };
 

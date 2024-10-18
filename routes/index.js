@@ -15,8 +15,8 @@ routes.delete("/cars/:id", controller.deleteCar);
 // ROUTES FOR EMPLOYEES
 //#########################################
 routes.get("/", controller.welcome);
-routes.get("/emploees/:id", controller.getSingleEmployee);
-routes.get("/employees", controller.getAllEmployee);
+routes.get("/employees/:id", controller.getSingleEmployee);
+routes.get("/employees", controller.getAllEmployees);
 routes.post("/addemployee", controller.addEmployee);
 routes.put("/employees/:id", controller.updateEmployee);
 routes.delete("/employees/:id", controller.deleteEmployee);

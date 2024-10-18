@@ -117,15 +117,15 @@ async function getAllEmployees() {
             await connectToMongoDB();
         }
 
-        const listOfCars = await client
-            .db("cars")
-            .collection("cars")
+        const listOfEmployees = await client
+            .db("employees")
+            .collection("employees")
             .find({})
             .toArray();
         
-        return listOfCars;
+        return listOfEmployees;
     } catch (e) {
-        console.error("Error fetching cars:", e);
+        console.error("Error fetching employes:", e);
         throw e;
     }
 }
@@ -138,51 +138,51 @@ async function getSingleEmployee(id) {
 
         const query = { _id: new ObjectId(id) };
         console.log('Database query:', query); // Add this log
-        const car = await client.db("cars").collection("cars").findOne(query);
+        const car = await client.db("employees").collection("employees").findOne(query);
         console.log('Database result:', car); // Add this log
         return car;
     } catch (e) {
-        console.error("Error fetching single car:", e);
+        console.error("Error fetching single employee:", e);
         throw e;
     }
 }
 
-async function addEmployee(newCar) {
+async function addEmployee(newEmployee) {
     try {
         if (!client.topology || !client.topology.isConnected()) {
             await connectToMongoDB();
         }
 
         const result = await client
-            .db("cars")
-            .collection("cars")
-            .insertOne(newCar);
+            .db("employees")
+            .collection("employees")
+            .insertOne(newEmployee);
 
-        return { _id: result.insertedId, ...newCar };
+        return { _id: result.insertedId, ...newEmployee };
     } catch (e) {
-        console.error("Error adding new car:", e);
+        console.error("Error adding new employee:", e);
         throw e;
     }
 }
 
-async function updateEmployee(id, updatedCar) {
+async function updateEmployee(id, updatedEmployee) {
     try {
         if (!client.topology || !client.topology.isConnected()) {
             await connectToMongoDB();
         }
 
         const result = await client
-            .db("cars")
-            .collection("cars")
-            .updateOne({ _id: new ObjectId(id) }, { $set: updatedCar });
+            .db("employees")
+            .collection("employees")
+            .updateOne({ _id: new ObjectId(id) }, { $set: updatedEmployee });
 
         if (result.matchedCount === 0) {
-            throw new Error('Car not found');
+            throw new Error('Employee not found');
         }
 
-        return { _id: id, ...updatedCar };
+        return { _id: id, ...updatedEmployee };
     } catch (e) {
-        console.error("Error updating car:", e);
+        console.error("Error updating Employee:", e);
         throw e;
     }
 }
@@ -194,13 +194,13 @@ async function deleteEmployee(id) {
         }
 
         const result = await client
-            .db("cars")
-            .collection("cars")
+            .db("employees")
+            .collection("employees")
             .deleteOne({ _id: new ObjectId(id) });
 
         return result;
     } catch (e) {
-        console.error("Error deleting car:", e);
+        console.error("Error deleting employee:", e);
         throw e;
     }
 }
