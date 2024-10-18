@@ -2,7 +2,7 @@ const connectDB = require('../modules/index');
 const { ObjectId } = require('mongodb');
 
 const welcome = async (req, res) => {
-    res.json({ message: "Welcome to the Cars API" });
+    res.json("Welcome to the Cars and Employees API");
 };
 
 const getAllCars = async (req, res) => {
