@@ -15,7 +15,7 @@ const swaggerOptions = {
     },
     servers: [
       {
-        url: 'http://localhost:8080',
+        url: 'https://webservicespersonalproject.onrender.com/',
         description: 'Development server',
       },
     ],
