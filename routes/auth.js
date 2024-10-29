@@ -2,19 +2,13 @@ const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const env = require('dotenv').config();
 
-console.log('GOOGLE_CLIENT_ID:', process.env.GOOGLE_CLIENT_ID);
-console.log('GOOGLE_CLIENT_SECRET:', process.env.GOOGLE_CLIENT_SECRET);
 
 function setupGoogleAuth(app) {
-  if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
-    console.error('Missing GOOGLE_CLIENT_ID or GOOGLE_CLIENT_SECRET environment variable');
-    process.exit(1);
-  }
 
   passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: "http://localhost:8080/auth/google/callback"
+    callbackURL: "https://webservicespersonalproject.onrender.com/auth/google/callback"
   },
   function(accessToken, refreshToken, profile, done) {
     // Here you would typically save or find the user in your database
