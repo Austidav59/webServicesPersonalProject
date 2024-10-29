@@ -1,6 +1,30 @@
 const routes = require('express').Router();
 const controller = require("../controllers/index");
+const oauth = require('./auth')
 
+
+// New session test routes
+routes.get('/set-session', (req, res) => {
+    req.session.testData = 'Hello, Session!';
+    res.send('Session data set');
+  });
+  
+  routes.get('/get-session', (req, res) => {
+    if (req.session.testData) {
+      res.send(`Session data: ${req.session.testData}`);
+    } else {
+      res.send('No session data found');
+    }
+  });
+  
+  // If you're using Passport for authentication
+  routes.get('/check-auth', (req, res) => {
+    if (req.isAuthenticated()) {
+      res.send(`Authenticated as: ${req.user.username}`);
+    } else {
+      res.send('Not authenticated');
+    }
+  });
 /**
  * @swagger
  * /:

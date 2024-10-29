@@ -1,6 +1,9 @@
 const express = require('express');
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
+const session = require('express-session');
+const passport = require('passport');
+require('dotenv').config();
 
 const app = express();
 
@@ -27,6 +30,17 @@ const swaggerSpec = swaggerJsdoc(swaggerOptions);
 
 // Middleware to parse incoming JSON requests
 app.use(express.json());
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: true
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Set up Google Auth
+const setupGoogleAuth = require('./routes/auth');
+setupGoogleAuth(app);
 
 // Routes
 app.use("/", require('./routes/index'));
